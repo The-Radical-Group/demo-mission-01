@@ -12,5 +12,3 @@ This is our first mission to R&D our approach.
 4. 🔄 Set up the GitHub Actions workflow by duplicating this file: [GitHub Workflow File](https://github.com/radicalxdev/demo-mission-01-testing/blob/rnd-code-assessment/.github/workflows/assessment.yml). This will automate your tests and ensure they run consistently.
 
 5. 🧪 To test your workflow, create a PR. This will automatically trigger the GitHub action. Once the test is complete, check out the result here: [Webhook Site](https://webhook.site/#!/d60cc8fd-496c-4d4d-b0ed-32ed274cc7df/ded4d3d1-c2fe-4fbf-b63b-3d59883021b8/1).
-
-Remember, practice makes perfect! Keep testing and refining your workflow to ensure smooth operation. Happy coding! 👩‍💻👨‍💻
