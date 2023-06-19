@@ -10,5 +10,4 @@ function deleteRow(rows,id){
 }
 
 // this is a
-
 module.exports = deleteRow;
