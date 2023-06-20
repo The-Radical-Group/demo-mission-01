@@ -25,7 +25,8 @@ jobs:
         id: read-results
         run: |
           JSON_RESULTS=$(jq -c '.' jest-results.json)
-          echo "::set-output name=results::$JSON_RESULTS"
+          JSON_RESULTS_ESCAPED=$(echo $JSON_RESULTS | sed 's/"/\\"/g')
+          echo "::set-output name=results::$JSON_RESULTS_ESCAPED"
 
       - name: Send test results to webhook
         run: |
