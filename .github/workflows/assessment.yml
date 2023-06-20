@@ -32,6 +32,8 @@ jobs:
         env:
           GITHUB_ACTOR: ${{ github.actor }}
         run: |
+          PAYLOAD="{\"github_user\": \"$GITHUB_ACTOR\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"test_results\": \"${{ steps.read-results.outputs.results }}\"}"
+          echo $PAYLOAD
           curl -X POST -H "Content-Type: application/json" \
-               -d "{\"github_user\": \"$GITHUB_ACTOR\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"test_results\": \"${{ steps.read-results.outputs.results }}\"}" \
+               -d "$PAYLOAD" \
                "https://us-central1-radicalx-68127.cloudfunctions.net/githubActionsWebhook"
