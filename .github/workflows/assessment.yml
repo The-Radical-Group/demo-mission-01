@@ -30,9 +30,10 @@ jobs:
       - name: Generate payload
         env:
           GITHUB_ACTOR: ${{ github.actor }}
+        id: payload
         run: |
-          echo "{\"github_user\": \"$GITHUB_ACTOR\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"test_results\": ${JSON_RESULTS} }" > payload.json
-        shell: bash
+          PAYLOAD=$(printf '{"github_user": "%s", "missionId": "JHMWMIPj9tXj7z7Eums5", "test_results": %s}' "$GITHUB_ACTOR" "${{ steps.read-results.outputs.results }}")
+          echo "$PAYLOAD" > payload.json
 
       - name: Display payload
         run: cat payload.json
