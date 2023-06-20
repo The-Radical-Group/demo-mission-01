@@ -29,5 +29,9 @@ jobs:
           echo "::set-output name=results::$JSON_RESULTS_ESCAPED"
 
       - name: Send test results to webhook
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
         run: |
-          curl -X POST -H "Content-Type: application/json" -d "${{ steps.read-results.outputs.results }}" "https://us-central1-radicalx-68127.cloudfunctions.net/githubActionsWebhook"
+          curl -X POST -H "Content-Type: application/json" \
+               -d "{\"github_user\": \"$GITHUB_ACTOR\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"test_results\": \"${{ steps.read-results.outputs.results }}\"}" \
+               "https://us-central1-radicalx-68127.cloudfunctions.net/githubActionsWebhook"
