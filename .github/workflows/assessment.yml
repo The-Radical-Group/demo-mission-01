@@ -24,14 +24,15 @@ jobs:
       - name: Read Jest results file
         id: read-results
         run: |
-          JSON_RESULTS=$(jq -c -r '.' jest-results.json)
+          JSON_RESULTS=$(jq -c '.' jest-results.json)
           echo "::set-output name=results::$JSON_RESULTS"
 
       - name: Generate payload
         env:
           GITHUB_ACTOR: ${{ github.actor }}
         run: |
-          echo "{\"github_user\": \"$GITHUB_ACTOR\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"test_results\": ${{ steps.read-results.outputs.results }} }" > payload.json
+          echo "{\"github_user\": \"$GITHUB_ACTOR\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"test_results\": ${JSON_RESULTS} }" > payload.json
+        shell: bash
 
       - name: Display payload
         run: cat payload.json
