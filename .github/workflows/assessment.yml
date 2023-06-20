@@ -18,28 +18,11 @@ jobs:
       - name: Run Jest tests
         run: npm test -- --json --outputFile=jest-results.json
 
-      - name: Install jq
-        run: sudo apt-get install jq
-
-      - name: Read Jest results file
+      - name: Read Jest results file3
         id: read-results
         run: |
-          JSON_RESULTS=$(jq -cM '.' jest-results.json)
-          echo "::set-output name=results::$JSON_RESULTS"
-
-      - name: Generate payload
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-        id: payload
-        run: |
-          PAYLOAD=$(printf '{"github_user": "%s", "missionId": "JHMWMIPj9tXj7z7Eums5", "test_results": %s}' "$GITHUB_ACTOR" "${{ steps.read-results.outputs.results }}")
-          echo "$PAYLOAD" > payload.json
-
-      - name: Display payload
-        run: cat payload.json
+          echo "::set-output name=results::$(jq -Rs '.' jest-results.json)"
 
       - name: Send test results to webhook
         run: |
-          curl -X POST -H "Content-Type: application/json" \
-               --data-binary @payload.json \
-               "https://us-central1-radicalx-68127.cloudfunctions.net/githubActionsWebhook"
+          curl -X POST -H "Content-Type: application/json" -d '${{ steps.read-results.outputs.results }}' "https://us-central1-radicalx-68127.cloudfunctions.net/githubActionsWebhook"
