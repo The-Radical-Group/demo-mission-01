@@ -25,8 +25,8 @@ jobs:
         id: read-results
         run: |
           JSON_RESULTS=$(jq -c '.' jest-results.json)
-          JSON_RESULTS_ESCAPED=$(echo $JSON_RESULTS | sed 's/"/\\"/g')
-          echo "RESULTS={\"github_user\":\"${{ github.actor }}\",\"test_results\":$JSON_RESULTS_ESCAPED}" >> $GITHUB_ENV
+          GITHUB_JSON="{\"github_user\": \"${{ github.actor }}\", \"test_results\": $JSON_RESULTS}"
+          echo "RESULTS=$GITHUB_JSON" >> $GITHUB_ENV
 
       - name: Send test results to webhook
         run: |
