@@ -15,6 +15,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install jq
+        run: sudo apt-get install jq
+
       - name: Run Jest tests
         run: npm test -- --json --outputFile=jest-results.json
 
