@@ -21,12 +21,12 @@ jobs:
       - name: Install jq
         run: sudo apt-get install jq
 
-      - name: Read Jest results file
+      - name: Read Jest results file and include GitHub handle
         id: read-results
         run: |
           JSON_RESULTS=$(jq -c '.' jest-results.json)
           JSON_RESULTS_ESCAPED=$(echo $JSON_RESULTS | sed 's/"/\\"/g')
-          echo "::set-output name=results::$JSON_RESULTS_ESCAPED"
+          echo "::set-output name=results::{\"github_user\":\"${{ github.actor }}\",\"test_results\":$JSON_RESULTS_ESCAPED}"
 
       - name: Send test results to webhook
         run: |
