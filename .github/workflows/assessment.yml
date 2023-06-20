@@ -28,4 +28,4 @@ jobs:
 
       - name: Send test results to webhook
         run: |
-          curl -X POST -H "Content-Type: application/json" --data-raw "${{ steps.read-results.outputs.results }}" "https://us-central1-radicalx-68127.cloudfunctions.net/githubActionsWebhook"
+          curl -X POST -H "Content-Type: application/json" --data-raw '${{ steps.read-results.outputs.results }}' "https://us-central1-radicalx-68127.cloudfunctions.net/githubActionsWebhook"
