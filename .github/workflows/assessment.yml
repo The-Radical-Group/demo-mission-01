@@ -18,11 +18,15 @@ jobs:
       - name: Run Jest tests
         run: npm test -- --json --outputFile=jest-results.json
 
-      - name: Read Jest results file3
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Read Jest results file
         id: read-results
         run: |
-          echo "::set-output name=results::$(jq -Rs '.' jest-results.json)"
+          JSON_RESULTS=$(jq -c '.' jest-results.json)
+          echo "::set-output name=results::$JSON_RESULTS"
 
       - name: Send test results to webhook
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '${{ steps.read-results.outputs.results }}' "https://us-central1-radicalx-68127.cloudfunctions.net/githubActionsWebhook"
+          curl -X POST -H "Content-Type: application/json" -d "${{ steps.read-results.outputs.results }}" "https://us-central1-radicalx-68127.cloudfunctions.net/githubActionsWebhook"
