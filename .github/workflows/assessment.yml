@@ -24,15 +24,14 @@ jobs:
       - name: Read Jest results file
         id: read-results
         run: |
-          JSON_RESULTS=$(jq -c '.' jest-results.json)
-          JSON_RESULTS_ESCAPED=$(echo $JSON_RESULTS | sed 's/"/\\"/g')
-          echo "::set-output name=results::$JSON_RESULTS_ESCAPED"
+          JSON_RESULTS=$(jq '.' jest-results.json)
+          echo "::set-output name=results::$JSON_RESULTS"
 
       - name: Send test results to webhook
         env:
           GITHUB_ACTOR: ${{ github.actor }}
         run: |
-          PAYLOAD="{\"github_user\": \"$GITHUB_ACTOR\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"test_results\": \"${{ steps.read-results.outputs.results }}\"}"
+          PAYLOAD="{\"github_user\": \"$GITHUB_ACTOR\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"test_results\": ${{ steps.read-results.outputs.results }} }"
           echo $PAYLOAD
           curl -X POST -H "Content-Type: application/json" \
                -d "$PAYLOAD" \
