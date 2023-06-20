@@ -24,7 +24,7 @@ jobs:
       - name: Read Jest results file
         id: read-results
         run: |
-          JSON_RESULTS=$(jq -c '.' jest-results.json)
+          JSON_RESULTS=$(jq -cM '.' jest-results.json)
           echo "::set-output name=results::$JSON_RESULTS"
 
       - name: Generate payload
