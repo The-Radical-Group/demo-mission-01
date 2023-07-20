@@ -2,7 +2,7 @@ var deleteRow = require('./Task1.js');
 var input = [{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { id: 3, name: 'c' }, { id: 4, name: 'd' }];
 var output = [{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { id: 3, name: 'c' }];
 
-describe("Task2", () => {
+describe("task3", () => {
   let testStatus = false;
 
   it("Delete a particular row", () => {
