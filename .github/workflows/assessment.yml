@@ -25,7 +25,7 @@ jobs:
         id: read-results
         run: |
           JSON_RESULTS=$(jq -c '.' jest-results.json)
-          GITHUB_JSON="{\"github_user\": \"${{ github.actor }}\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"test_results\": $JSON_RESULTS}"
+          GITHUB_JSON="{\"githubUser\": \"${{ github.actor }}\", \"missionId\": \"JHMWMIPj9tXj7z7Eums5\", \"testResults\": $JSON_RESULTS}"
           echo "$GITHUB_JSON" > results.json
 
       - name: Send test results to webhook
