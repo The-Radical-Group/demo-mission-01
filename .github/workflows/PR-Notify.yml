@@ -1,0 +1,38 @@
+name: PR and Push Webhook Notification
+
+on:
+  pull_request:
+    types: [opened]
+  push:
+    branches:
+      - "**" # Trigger on all branches
+
+jobs:
+  send_webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send webhook on PR open or push
+        env:
+          WEBHOOK_URL: https://webhook.site/56946f19-426f-4823-8b35-e78193f8ee1c
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            curl -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "event_type": "pull_request",
+              "pr_title": "${{ github.event.pull_request.title }}",
+              "github_user": "${{ github.event.pull_request.user.login }}",
+              "repo_url": "${{ github.event.repository.html_url }}",
+              "pr_description": "${{ github.event.pull_request.body }}"
+            }';
+          elif [ "${{ github.event_name }}" == "push" ]; then
+            curl -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "event_type": "push",
+              "branch": "${{ github.ref }}",
+              "commit_message": "${{ github.event.head_commit.message }}",
+              "committer": "${{ github.event.head_commit.committer.name }}",
+              "repo_url": "${{ github.event.repository.html_url }}"
+            }';
+          fi
