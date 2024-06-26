@@ -12,7 +12,7 @@ jobs:
         env:
           WEBHOOK_URL: https://webhook.site/56946f19-426f-4823-8b35-e78193f8ee1c
         run: |
-          curl -X POST $WEBHOOK_URL \
+          curl -X POST "$WEBHOOK_URL" \
           -H "Content-Type: application/json" \
           -d '{
             "pr_title": "${{ github.event.pull_request.title }}",
