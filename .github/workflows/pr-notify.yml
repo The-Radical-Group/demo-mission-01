@@ -15,8 +15,8 @@ jobs:
           curl -X POST "$WEBHOOK_URL" \
           -H "Content-Type: application/json" \
           -d '{
-            "pr_title": "${{ github.event.pull_request.title }}",
-            "github_user": "${{ github.event.pull_request.user.login }}",
-            "repo_url": "${{ github.event.repository.html_url }}",
-            "pr_description": "${{ github.event.pull_request.body }}"
+            "prTitle": "${{ github.event.pull_request.title }}",
+            "githubUser": "${{ github.event.pull_request.user.login }}",
+            "repoURL": "${{ github.event.repository.html_url }}",
+            "prDescription": "${{ github.event.pull_request.body }}"
           }'
